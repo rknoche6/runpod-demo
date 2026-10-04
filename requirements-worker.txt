@@ -1,0 +1,5 @@
+# Installed in the Docker image after torch (torch comes from the PyTorch index, see Dockerfile).
+runpod==1.12.0
+sentence-transformers==6.1.0
+transformers==5.18.0
+numpy==2.5.3

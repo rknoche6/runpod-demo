@@ -1,0 +1,36 @@
+{
+  "fetched_on": "2026-10-04",
+  "currency": "USD",
+  "sources": {
+    "pricing_page": "https://www.runpod.io/pricing (page header: 'Updated September 27, 2026')",
+    "serverless_per_second_table": "https://docs.runpod.io/serverless/endpoints/endpoint-configurations (last modified July 20, 2026)",
+    "serverless_billing_rules": "https://docs.runpod.io/serverless/pricing (last modified July 20, 2026)"
+  },
+  "serverless_flex_per_hr": {
+    "16GB": {"gpus": "A4000, A4500, RTX 4000, RTX 2000", "usd_per_hr": 0.58, "docs_usd_per_s": 0.00016},
+    "24GB": {"gpus": "L4, A5000, 3090, MIG 24GB", "usd_per_hr": 0.69, "docs_usd_per_s": 0.00019},
+    "24GB_PRO": {"gpus": "RTX 4090", "usd_per_hr": 1.10, "docs_usd_per_s": 0.00031},
+    "48GB": {"gpus": "A6000, A40", "usd_per_hr": 1.22, "docs_usd_per_s": 0.00034}
+  },
+  "serverless_active_per_hr": {
+    "note": "Not published. docs.runpod.io/serverless/pricing says active workers are always running and 'Discounts available through sales inquiry'. The cost model uses the flex rate times ACTIVE_DISCOUNT (default 1.0, i.e. no discount) until a real quote exists."
+  },
+  "pod_on_demand_per_hr": {
+    "note": "As listed on the pricing page Pods table. The page does not say which cloud tier (Secure/Community) each figure is; check the console's deploy screen before quoting.",
+    "RTX A5000": 0.27,
+    "L4": 0.49,
+    "RTX 3090": 0.50,
+    "A40": 0.49,
+    "RTX 4090": 0.74
+  },
+  "storage": {
+    "container_disk_usd_per_gb_month": 0.10,
+    "network_volume_usd_per_gb_month_under_1tb": 0.07,
+    "network_volume_usd_per_gb_month_over_1tb": 0.05
+  },
+  "billing_rules_quoted": [
+    "Serverless: billed from when a worker starts until it fully stops, rounded up to the nearest second.",
+    "Workers incur charges during start time, execution time and idle timeout (default 5 s).",
+    "Cached models: you aren't billed for worker time while the model is being downloaded."
+  ]
+}

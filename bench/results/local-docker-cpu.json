@@ -1,0 +1,106 @@
+{
+  "cold": [
+    {
+      "cold_total_s": 5.411,
+      "worker_startup_s": 4.347,
+      "import_s": 4.116,
+      "model_load_s": 0.231,
+      "first_inference_ms": 43.47
+    },
+    {
+      "cold_total_s": 3.948,
+      "worker_startup_s": 3.349,
+      "import_s": 3.237,
+      "model_load_s": 0.112,
+      "first_inference_ms": 23.24
+    },
+    {
+      "cold_total_s": 3.773,
+      "worker_startup_s": 2.983,
+      "import_s": 2.864,
+      "model_load_s": 0.118,
+      "first_inference_ms": 52.3
+    },
+    {
+      "cold_total_s": 4.306,
+      "worker_startup_s": 3.658,
+      "import_s": 3.515,
+      "model_load_s": 0.143,
+      "first_inference_ms": 32.48
+    },
+    {
+      "cold_total_s": 4.075,
+      "worker_startup_s": 3.293,
+      "import_s": 3.172,
+      "model_load_s": 0.121,
+      "first_inference_ms": 27.35
+    }
+  ],
+  "warm": {
+    "query_1": {
+      "client": {
+        "n": 100,
+        "p50_ms": 27.62,
+        "p90_ms": 28.87,
+        "p99_ms": 47.73,
+        "min_ms": 25.72,
+        "max_ms": 55.79,
+        "mean_ms": 28.13
+      },
+      "handler_inference": {
+        "n": 100,
+        "p50_ms": 22.2,
+        "p90_ms": 22.7,
+        "p99_ms": 40.99,
+        "min_ms": 21.74,
+        "max_ms": 50.1,
+        "mean_ms": 22.86
+      }
+    },
+    "passages_32": {
+      "client": {
+        "n": 20,
+        "p50_ms": 587.58,
+        "p90_ms": 635.45,
+        "p99_ms": 774.72,
+        "min_ms": 574.09,
+        "max_ms": 806.28,
+        "mean_ms": 606.97
+      },
+      "handler_inference": {
+        "n": 20,
+        "p50_ms": 563.19,
+        "p90_ms": 611.84,
+        "p99_ms": 751.69,
+        "min_ms": 550.29,
+        "max_ms": 784.01,
+        "mean_ms": 582.35
+      }
+    }
+  },
+  "cost": {
+    "gpu_class": "16GB",
+    "flex_usd_per_s": 0.00016111,
+    "prices_fetched_on": "2026-10-04",
+    "inputs": {
+      "cold_start_s_median": 4.075,
+      "warm_exec_s_p50": 0.027620000000000002,
+      "warm_exec_32_s_p50": 0.58758,
+      "idle_timeout_s": 5.0
+    },
+    "per_1k_queries_busy_worker_usd": 0.00445,
+    "per_1k_queries_all_cold_usd": 1.61111,
+    "per_1k_batch32_busy_worker_usd": 0.09467,
+    "active_worker_month_usd_no_discount": 417.6,
+    "breakeven_req_per_day_active_vs_all_cold": 8640,
+    "caveat": "local targets: timings are CPU on this machine, priced at a GPU rate only to show the arithmetic; do not quote them as Runpod costs"
+  },
+  "meta": {
+    "target": "local-docker",
+    "utc": "2026-10-04T12:02:26+00:00",
+    "host": "Darwin arm64",
+    "python": "3.12.6",
+    "image": "runpod-demo:cpu",
+    "endpoint_id": null
+  }
+}

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Embedding search demo</title>
+<style>
+  :root { --bg:#fff; --fg:#1b1b1b; --muted:#666; --line:#ddd; --accent:#2a5bd7; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#141414; --fg:#eee; --muted:#999; --line:#333; --accent:#7aa2ff; } }
+  body { background:var(--bg); color:var(--fg); font:15px/1.5 system-ui, sans-serif; max-width:760px; margin:2rem auto; padding:0 16px; }
+  textarea, input { width:100%; box-sizing:border-box; font:inherit; padding:.5rem; border:1px solid var(--line); background:transparent; color:inherit; }
+  button { margin-top:.5rem; padding:.4rem 1rem; font:inherit; background:var(--accent); color:#fff; border:0; cursor:pointer; }
+  pre { white-space:pre-wrap; border-top:1px solid var(--line); padding-top:.75rem; color:var(--muted); font-size:13px; }
+  li { margin:.3rem 0; } .s { color:var(--muted); font-variant-numeric:tabular-nums; }
+</style>
+</head>
+<body>
+<h1>Embedding search demo</h1>
+<p>Ranks the documents below against the query with <code>BAAI/bge-small-en-v1.5</code>,
+served from a Runpod Serverless endpoint (or the local handler in mock mode). Timings come back with each result.</p>
+<label>Query<input id="q" value="How do I avoid slow first requests?"></label>
+<label>Documents, one per line<textarea id="d" rows="7">FlashBoot keeps worker state around after scale-down so the next start is faster.
+Active workers stay running all the time and are billed even when idle.
+Network volumes persist files across workers but tie the endpoint to one data center.
+The batch job writes embeddings to the network volume as .npy shards.
+Idle timeout controls how long a worker waits for another request before stopping.</textarea></label>
+<button id="go">Search</button>
+<ol id="out"></ol>
+<pre id="t"></pre>
+<script>
+document.getElementById('go').onclick = async () => {
+  const out = document.getElementById('out'), t = document.getElementById('t');
+  out.innerHTML = ''; t.textContent = 'waiting...';
+  const docs = document.getElementById('d').value.split('\n').map(s => s.trim()).filter(Boolean);
+  const r = await fetch('/v1/search', {method:'POST', headers:{'content-type':'application/json'},
+    body: JSON.stringify({query: document.getElementById('q').value, documents: docs, top_k: docs.length})});
+  const j = await r.json();
+  if (!r.ok) { t.textContent = JSON.stringify(j, null, 2); return; }
+  for (const x of j.results) { const li = document.createElement('li');
+    li.innerHTML = '<span class="s"></span> '; li.firstChild.textContent = x.score.toFixed(3);
+    li.append(x.text); out.append(li); }
+  t.textContent = JSON.stringify(j.timing, null, 2);
+};
+</script>
+</body>
+</html>
