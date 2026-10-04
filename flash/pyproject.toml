@@ -1,0 +1,10 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "runpod-demo-embed"
+version = "0.1.0"
+description = "bge-small-en-v1.5 embeddings as a Runpod Serverless endpoint, deployed with Flash"
+requires-python = ">=3.11,<3.13"
+dependencies = ["runpod-flash"]

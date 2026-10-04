@@ -194,3 +194,21 @@ The front is a stateless FastAPI app; any host that runs a Python container work
 needs `RUNPOD_API_KEY` and `RUNPOD_ENDPOINT_ID` as secrets. Before making it public, add
 a per-IP rate limit and lower `MAX_TEXTS` / `MAX_SEARCH_DOCS` in `app/main.py`: every
 request spends GPU seconds on the account.
+
+## Option B: deploy with Runpod Flash (no Docker)
+
+`flash/embed_worker.py` is the same endpoint written for [Runpod Flash](https://docs.runpod.io/flash/overview).
+Flash packages the Python code and installs the dependencies on the worker, so there is no image
+to build or push. The request and response shapes match the Docker worker. The trade-off: the
+model downloads from Hugging Face on every cold worker (about 135 MB) instead of being baked in.
+
+```sh
+python3.12 -m venv .flash-venv && .flash-venv/bin/pip install runpod-flash==1.20.0
+export RUNPOD_API_KEY=...            # or keep it in .env (git-ignored)
+cd flash
+../.flash-venv/bin/flash build --python-version 3.12   # local check: ~136 MB artifact, torch excluded
+../.flash-venv/bin/flash deploy --python-version 3.12  # prints the endpoint id
+```
+
+Then point everything else at it: `export RUNPOD_ENDPOINT_ID=<id>` and run the smoke test and
+`bench/benchmark.py runpod` as in the steps above. Tear down with `flash app delete <app>`.

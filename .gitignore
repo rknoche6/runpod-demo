@@ -4,3 +4,5 @@ __pycache__/
 data/
 out/
 .env
+.flash-venv/
+flash/.flash/
